@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link to your CSS if needed -->
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ user.username }}</h1>
+
+        <h2>Your Profile</h2>
+        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <p>Points Earned: {{ user.points }}</p>  <!-- You'll need to add a field for points in the User model or fetch from related Task models -->
+
+        <h2>Available Apps</h2>
+        <ul>
+            {% for app in apps %}
+                <li>
+                    {{ app.name }} - Points: {{ app.points }}
+                    <form action="{% url 'upload_screenshot' app.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="screenshot" required>
+                        <button type="submit">Upload Screenshot</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Completed Tasks</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    App: {{ task.app.name }} - Status: {{ task.completed|yesno:"Completed,Pending" }}
+                    {% if task.screenshot %}
+                        <img src="{{ task.screenshot.url }}" alt="Screenshot" style="width:100px;">
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

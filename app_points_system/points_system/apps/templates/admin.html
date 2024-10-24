@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    {% load static %}  <!-- Load the static files library -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <h2>Add New App</h2>
+        <form method="post" action="{% url 'add_app' %}">
+            {% csrf_token %}
+            <div>
+                <label for="name">App Name:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="points">Points for Download:</label>
+                <input type="number" name="points" id="points" required>
+            </div>
+            <button type="submit">Add App</button>
+        </form>
+
+        <h2>Manage Apps</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>App Name</th>
+                    <th>Points</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in apps %}
+                    <tr>
+                        <td>{{ app.name }}</td>
+                        <td>{{ app.points }}</td>
+                        <td>
+                            <form action="{% url 'delete_app' app.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

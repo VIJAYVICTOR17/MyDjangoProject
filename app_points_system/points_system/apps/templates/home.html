@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load static %}  <!-- Load the static files library -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link to your CSS if needed -->
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Points System</h1>
+        <p><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></p>
+        <p><a href="{% url 'user_dashboard' %}">User Dashboard</a></p>
+    </div>
+</body>
+</html>

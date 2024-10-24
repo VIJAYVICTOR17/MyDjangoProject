@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Screenshot</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Link to your CSS if needed -->
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Screenshot for {{ app.name }}</h1>
+        <p>Please upload a screenshot to confirm your download.</p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}  <!-- Renders the form fields -->
+            <button type="submit">Upload Screenshot</button>
+        </form>
+
+        <br>
+        <a href="{% url 'user_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+</html>
